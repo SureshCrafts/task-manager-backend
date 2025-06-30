@@ -1,0 +1,36 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+build/
+*~
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.DS_Store
+ehcache/
+
+# Spring Boot
+*.jar
+*.war
+*.zip
+*.tar.gz
+*.log
+logs/
+tmp/
+.mvn/wrapper/maven-wrapper.jar # Wrapper is fine, but the downloaded jar shouldn't be versioned
+
+# OS
+.DS_Store
+Thumbs.db
