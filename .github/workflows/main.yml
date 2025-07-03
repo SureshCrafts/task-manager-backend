@@ -27,7 +27,7 @@ jobs:
       run: mvn -B clean install # Use Maven to clean and install dependencies and build the project
 
     - name: Run Tests with Maven
-      run: mvn test # Run tests using Maven
+      run: mvn test -X # Run tests using Maven
 
     - name: Display a success message
       run: echo "Spring Boot CI/CD Pipeline Finished Successfully!"
