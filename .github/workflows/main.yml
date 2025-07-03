@@ -16,7 +16,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4 # This action checks out your repository code
 
-    - name: Set up Node.js (Example: if you have a Node.js project)
+    - name: Set up Node.js #(Example: if you have a Node.js project)
       uses: actions/setup-node@v4
       with:
         node-version: '18' # Specify the Node.js version
