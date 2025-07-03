@@ -16,27 +16,29 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4 # This action checks out your repository code
 
-    - name: Set up Node.js #(Example: if you have a Node.js project)
-      uses: actions/setup-node@v4
+    - name: Set up Java JDK 17 # Setting up Java Development Kit
+      uses: actions/setup-java@v4
       with:
-        node-version: '18' # Specify the Node.js version
+        distribution: 'temurin' # Recommended open-source JDK distribution
+        java-version: '17'      # Specify the Java version for Spring Boot (e.g., '11', '17', '21')
+        cache: 'maven'          # Caches Maven dependencies to speed up builds
 
-    - name: Install Dependencies (Example)
-      run: npm install # Replace with your project's dependency install command (e.g., pip install -r requirements.txt, mvn clean install)
+    - name: Build with Maven
+      run: mvn -B clean install # Use Maven to clean and install dependencies and build the project
 
-    - name: Run Tests (Example)
-      run: npm test # Replace with your project's test command (e.g., pytest, mvn test)
+    - name: Run Tests with Maven
+      run: mvn test # Run tests using Maven
 
     - name: Display a success message
-      run: echo "CI/CD Pipeline Finished Successfully!"
+      run: echo "Spring Boot CI/CD Pipeline Finished Successfully!"
 
-  # You can add more jobs here, e.g., 'deploy'
+  # Optional: Add a deploy job later for Kubernetes
   # deploy:
-  #   needs: build # This job will only run if the 'build' job succeeds
+  #   needs: build
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - name: Deploy to Kubernetes (Example - requires Kubernetes tooling setup)
+  #     - name: Deploy to Kubernetes (Example)
   #       run: |
   #         echo "Simulating deployment to Kubernetes..."
   #         # kubectl apply -f k8s/deployment.yaml
-  #         # Here you would typically use actions like kubernetes-action/kubeconfig@v1 and kubernetes-action/kubectl@v1
+  #         # Remember to set up kubeconfig credentials securely
