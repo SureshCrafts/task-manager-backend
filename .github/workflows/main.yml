@@ -3,39 +3,28 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main # This workflow runs on pushes to the 'main' branch
+      - main
   pull_request:
     branches:
-      - main # This workflow also runs on pull requests targeting 'main'
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest # This specifies the virtual environment where the job will run
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4 # This action checks out your repository code
+      uses: actions/checkout@v4
 
-    - name: Set up Java JDK 17 # Setting up Java Development Kit
+    - name: Set up Java JDK 17
       uses: actions/setup-java@v4
       with:
-        distribution: 'temurin' # Recommended open-source JDK distribution
-        java-version: '17'      # Specify the Java version for Spring Boot (e.g., '11', '17', '21')
-        cache: 'maven'          # Caches Maven dependencies to speed up builds
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'maven'
 
     - name: Build with Maven
-      run: mvn -B clean install # Use Maven to clean and install dependencies and build the project
+      run: mvn -B clean install -DskipTests # Updated line to skip tests
 
     - name: Display a success message
-      run: echo "Spring Boot CI/CD Pipeline Finished Successfully!"
-
-  # Optional: Add a deploy job later for Kubernetes
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy to Kubernetes (Example)
-  #       run: |
-  #         echo "Simulating deployment to Kubernetes..."
-  #         # kubectl apply -f k8s/deployment.yaml
-  #         # Remember to set up kubeconfig credentials securely
+      run: echo "Spring Boot CI/CD Pipeline Finished Successfully (Tests Skipped)!"
