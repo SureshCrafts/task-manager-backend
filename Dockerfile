@@ -1,6 +1,6 @@
-# Use a base image with Java 17 and Maven
-# eclipse-temurin is a good choice for official OpenJDK builds
-FROM eclipse-temurin:17-jdk-focal as build
+# Use a base image with Maven and Java 17
+# maven:3.9.6-eclipse-temurin-17 is a good choice for Maven 3.9.6 with Temurin JDK 17
+FROM maven:3.9.6-eclipse-temurin-17 as build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -11,11 +11,10 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the Spring Boot application
-# -Dmaven.test.skip=true is added to skip tests during build, which can speed up deployment.
-# You can remove it if you want tests to run during every Render build.
 RUN mvn clean install -Dmaven.test.skip=true
 
 # --- Second Stage: Create a smaller runtime image ---
+# Use a JRE image for the final application to keep the image size small
 FROM eclipse-temurin:17-jre-focal
 
 # Set the working directory
@@ -23,8 +22,6 @@ WORKDIR /app
 
 # Copy the built JAR from the build stage
 # The JAR name should match your artifactId-version.jar from your pom.xml
-# For example, if your pom.xml artifactId is 'task-manager-backend' and version is '0.0.1-SNAPSHOT'
-# then the JAR will be 'task-manager-backend-0.0.1-SNAPSHOT.jar'
 COPY --from=build /app/target/task-manager-backend-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # Expose the port your Spring Boot app runs on (default 8080)
